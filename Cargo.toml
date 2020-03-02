@@ -3,6 +3,7 @@ name = "tari_pubsub"
 version = "0.1.0"
 authors = ["The Tari development Community"]
 description = "Single publisher with multiple subscribers to topic messages"
+license = "BSD-3-Clause"
 keywords = ["pubsub", "async","futures", "topic"]
 repository = "https://github.com/tari-project/pubsub"
 homepage = "https://tari.com"
