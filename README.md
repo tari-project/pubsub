@@ -8,7 +8,7 @@ Pubsub is an abstraction over `tari_broadcast_channel`
 
 ```
     // Create a new channel with a buffer of 10 messages
-    let (mut publisher, subscriber_factory) = pubsub_channel(10);
+    let (mut publisher, subscriber_factory) = pubsub_channel(10, 1);
 
     // Create a struct that we want to use as messages
     #[derive(Debug, Clone)]

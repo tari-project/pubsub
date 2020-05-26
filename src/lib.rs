@@ -86,8 +86,10 @@ where
 /// which can produce multiple subscribers for provided topics.
 pub fn pubsub_channel<T: Send + Eq, M: Send + Clone>(
     size: usize,
-) -> (TopicPublisher<T, M>, TopicSubscriptionFactory<T, M>) {
-    let (publisher, subscriber): (TopicPublisher<T, M>, TopicSubscriber<T, M>) = bounded(size);
+    receiver_id: usize,
+) -> (TopicPublisher<T, M>, TopicSubscriptionFactory<T, M>)
+{
+    let (publisher, subscriber): (TopicPublisher<T, M>, TopicSubscriber<T, M>) = bounded(size, receiver_id);
     (publisher, TopicSubscriptionFactory::new(subscriber))
 }
 
@@ -98,7 +100,7 @@ mod test {
 
     #[test]
     fn topic_pub_sub() {
-        let (mut publisher, subscriber_factory) = pubsub_channel(10);
+        let (mut publisher, subscriber_factory) = pubsub_channel(10, 1);
 
         #[derive(Debug, Clone)]
         struct Dummy {
