@@ -83,14 +83,22 @@ where
 }
 
 /// Create Topic based Pub-Sub channel which returns the Publisher side of the channel and TopicSubscriptionFactory
-/// which can produce multiple subscribers for provided topics.
-pub fn pubsub_channel<T: Send + Eq, M: Send + Clone>(
+/// which can produce multiple subscribers for provided topics. The initial receiver id is required and used to label
+/// the subscribers, which makes debugging simpler.
+pub fn pubsub_channel_with_id<T: Send + Eq, M: Send + Clone>(
     size: usize,
     receiver_id: usize,
 ) -> (TopicPublisher<T, M>, TopicSubscriptionFactory<T, M>)
 {
     let (publisher, subscriber): (TopicPublisher<T, M>, TopicSubscriber<T, M>) = bounded(size, receiver_id);
     (publisher, TopicSubscriptionFactory::new(subscriber))
+}
+
+/// Create a topi-based pub-sub channel with a default receiver id of 1
+pub fn pubsub_channel<T: Send + Eq, M: Send + Clone>(
+    size: usize,
+) -> (TopicPublisher<T, M>, TopicSubscriptionFactory<T, M>) {
+    pubsub_channel_with_id(size, 1)
 }
 
 #[cfg(test)]
@@ -100,7 +108,7 @@ mod test {
 
     #[test]
     fn topic_pub_sub() {
-        let (mut publisher, subscriber_factory) = pubsub_channel(10, 1);
+        let (mut publisher, subscriber_factory) = pubsub_channel(10);
 
         #[derive(Debug, Clone)]
         struct Dummy {
