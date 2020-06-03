@@ -1,6 +1,6 @@
 [package]
 name = "tari_pubsub"
-version = "0.2.0"
+version = "0.2.1"
 authors = ["The Tari development Community"]
 description = "Single publisher with multiple subscribers to topic messages"
 license = "BSD-3-Clause"
