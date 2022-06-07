@@ -19,8 +19,9 @@
 // SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY,
 // WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE
 // USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
-use futures::{future, prelude::*, stream::Fuse};
 use std::fmt::Debug;
+
+use futures::{future, prelude::*, stream::Fuse};
 use tari_broadcast_channel::{bounded, Publisher, Subscriber};
 
 /// The container for a message that is passed along the pub-sub channel that contains a Topic to define the type of
@@ -88,8 +89,7 @@ where
 pub fn pubsub_channel_with_id<T: Send + Eq, M: Send + Clone>(
     size: usize,
     receiver_id: usize,
-) -> (TopicPublisher<T, M>, TopicSubscriptionFactory<T, M>)
-{
+) -> (TopicPublisher<T, M>, TopicSubscriptionFactory<T, M>) {
     let (publisher, subscriber): (TopicPublisher<T, M>, TopicSubscriber<T, M>) = bounded(size, receiver_id);
     (publisher, TopicSubscriptionFactory::new(subscriber))
 }
@@ -103,8 +103,9 @@ pub fn pubsub_channel<T: Send + Eq, M: Send + Clone>(
 
 #[cfg(test)]
 mod test {
-    use super::*;
     use futures::executor::block_on;
+
+    use super::*;
 
     #[test]
     fn topic_pub_sub() {
