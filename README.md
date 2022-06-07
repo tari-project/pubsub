@@ -1,5 +1,7 @@
 # Tari Pubsub
 
+## This repo is deprecated and no longer maintained.
+
 Single publisher with multiple subscribers to topic messages.
 
 Pubsub is an abstraction over `tari_broadcast_channel`
