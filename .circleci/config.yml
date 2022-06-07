@@ -1,7 +1,7 @@
 version: 2.1
 
 defaults:
-  rust_image: &rust_image quay.io/tarilabs/rust_tari-build-with-deps:nightly-2020-01-08
+  rust_image: &rust_image rust:latest
 
 commands:
   lint:
@@ -16,11 +16,11 @@ commands:
           keys:
             - v6-cargo-cache-{{arch}}-{{checksum "rust-version"}}-n-{{checksum "Cargo.lock"}}
       - run:
-          name: Tari Crypto tests
+          name: Run rustfmt
           command: |
-             TOOLCHAIN=$(cat rust-toolchain)
-             rustup component add --toolchain $TOOLCHAIN rustfmt
-             cargo fmt --all -- --check
+            rustup toolchain install nightly
+            rustup component add --toolchain nightly rustfmt
+            cargo +nightly fmt --all -- --check
       - save_cache:
           paths:
             - /usr/local/cargo/registry
